@@ -249,7 +249,7 @@ async def mailbox(event):
     email = event.pattern_match.group(1).decode("utf-8")
     await event.edit(
         f"Current email address: `{email}`\nReceived emails: 0",
-        buttons = 
+        buttons = [
            [Button.inline("REFRESH MAILBOX 🔁", data=f"ref_{email}")],
            [Button.url("FREE NETFLIX ACCOUNTS 💯", url="https://t.me/+xPvyu36YNV83YWVk")],
         ]
