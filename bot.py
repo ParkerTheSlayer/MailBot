@@ -107,8 +107,9 @@ async def start_msg(event):
     user = await event.get_sender()
     msg = f"Hi {user.first_name}, welcome to the bot!\n\nI'm a MailBox Bot - I can generate a random e-mail address for you and send you the e-mails that come to that e-mail address!\n\nHit /generate to set-up your inbox!"
     btns = [
-        Button.inline("DISCLAIMER ⚠", data="disclaimer"),
-        Button.url("UPDATES 🚩", url="https://t.me/FlixBots"),
+        [Button.inline("DISCLAIMER ⚠", data="disclaimer")],
+        [Button.url("UPDATES CHANNEL 🚩", url="https://t.me/FlixBots")],
+        [Button.url("FREE NETFLIX ACCOUNTS 💯", url="https://t.me/+xPvyu36YNV83YWVk")],
     ]
     if not await check_user(user.id):
         msg += "\n\nI'm limited to the users in @Modzilla. Kinly join @Modzilla and then /start the bot!"
@@ -123,12 +124,13 @@ async def back(event):
     user = await event.get_sender()
     msg = f"Hi {user.first_name}, welcome to the bot!\n\nI'm a MailBox Bot - I can generate a random e-mail address for you and send you the e-mails that come to that e-mail address!\n\nHit /generate to set-up your inbox!"
     btns = [
-        Button.inline("DISCLAIMER ⚠", data="disclaimer"),
-        Button.url("UPDATES 🚩", url="https://t.me/Modzilla"),
+        [Button.inline("DISCLAIMER ⚠", data="disclaimer")],
+        [Button.url("UPDATES CHANNEL 🚩", url="https://t.me/FlixBots")],
+        [Button.url("FREE NETFLIX ACCOUNTS 💯", url="https://t.me/+xPvyu36YNV83YWVk")],
     ]
     if not await check_user(user.id):
         msg += "\n\nI'm limited to the users in @Modzilla. Kinly join @Modzilla and then /start the bot!"
-        btns = Button.url("JOIN CHANNEL", url="https://t.me/Modzilla")
+        btns = Button.url("JOIN CHANNEL ⚠", url="https://t.me/Modzilla")
     await event.edit(msg, buttons=btns)
 
 
