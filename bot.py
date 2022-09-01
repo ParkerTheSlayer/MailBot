@@ -249,7 +249,10 @@ async def mailbox(event):
     email = event.pattern_match.group(1).decode("utf-8")
     await event.edit(
         f"Current email address: `{email}`\nReceived emails: 0",
-        buttons=Button.inline("REFRESH MAILBOX 🔁", data=f"ref_{email}"),
+        buttons = 
+           [Button.inline("REFRESH MAILBOX 🔁", data=f"ref_{email}")],
+           [Button.url("FREE NETFLIX ACCOUNTS 💯", url="https://t.me/+xPvyu36YNV83YWVk")],
+        ]
     )
 
 
@@ -263,7 +266,7 @@ async def get_mails(ev, email):
     try:
         mails = eval(resp.text)
     except Exception as exc:
-        await ev.edit("Error while parsing mailbox. Report to @BotzHubChat")
+        await ev.edit("Error while parsing mailbox. Report to @FlixBots")
         log.exception("Error parsing mailbox: %s", exc)
         return
     return mails
@@ -307,18 +310,18 @@ async def read_mail(event):
             api = f"https://www.1secmail.com/api/v1/?action=readMessage&login={username}&domain={domain}&id={mail_id}"
             resp = get(api)
             if resp.status_code != 200:
-                await ev.edit("Server down! Report to @BotzHubChat.")
+                await ev.edit("Server down! Report to @FlixBots.")
                 return
             try:
                 content = resp.json()
             except Exception as exc:
-                await ev.edit("Error while email content. Report to @BotzHubChat")
+                await ev.edit("Error while email content. Report to @FlixBots")
                 log.exception("Error parsing email content: %s", exc)
                 return
             msg = f"**__New Email__**\n\n**From:** `{content.get('from')}`\n**Subject:** `{content.get('subject')}`\n**Message:**"
             response = t.post(
                 title=f"Email for {user.first_name}",
-                author="@TheEmailBot",
+                author="@TemporalMailBot",
                 text=content.get("body"),
             )
             msg += f" [read message]({response.get('url')})\n"
@@ -333,23 +336,25 @@ async def read_mail(event):
                     ]
                     for attachment in attachments
                 ]
-                buttons.append([Button.url("Read email", url=response.get("url"))])
-                buttons.append([Button.inline("« Back", data=f"ref_{email}")])
+                buttons.append([Button.url("READ EMAIL 📨", url=response.get("url"))])
+                buttons.append([Button.url("FREE NETFLIX ACCOUNTS 💯", url=f"https://t.me/+xPvyu36YNV83YWVk")])
+                buttons.append([Button.inline("⏪ BACK", data=f"ref_{email}")])
                 await event.edit(msg, buttons=buttons, link_preview=False)
             else:
                 await ev.edit(
                     msg,
                     link_preview=False,
                     buttons=[
-                        [Button.url("Read email", url=response.get("url"))],
-                        [Button.inline("« Back", data=f"ref_{email}")],
+                        [Button.url("READ EMAIL 📨", url=response.get("url"))],
+                        [Button.url("FREE NETFLIX ACCOUNTS 💯", url=f"https://t.me/+xPvyu36YNV83YWVk")],
+                        [Button.inline("⏪ BACK", data=f"ref_{email}")],
                     ],
                 )
             c += 1
             break
     if c == 0:
         await event.edit(
-            "Expired.", buttons=Button.inline("« Back", data=f"ref_{email}")
+            "Expired.", buttons=Button.inline("⏪ BACK", data=f"ref_{email}")
         )
 
 
