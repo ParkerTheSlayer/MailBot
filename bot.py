@@ -112,7 +112,7 @@ async def start_msg(event):
         [Button.url("FREE NETFLIX ACCOUNTS 💯", url="https://t.me/+xPvyu36YNV83YWVk")],
     ]
     if not await check_user(user.id):
-        msg += "\n\nI'm limited to the users in @FlixBits. Kinly join @FlixBots and then /start the bot!"
+        msg += "\n\nI'm limited to the users in @FlixBots. Kinly join @FlixBots and then /start the bot!"
         btns = Button.url("JOIN CHANNEL ⚠", url="https://t.me/FlixBots")
     await event.reply(msg, buttons=btns)
     if not await is_added("MAILBOT", user.id):
