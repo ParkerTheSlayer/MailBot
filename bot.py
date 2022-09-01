@@ -40,7 +40,7 @@ except Exception as e:
     exit(1)
 
 t = TelegraphPoster(use_api=True)
-t.create_api_token("@TheEmailBot", "MailBot", "https://www.xditya.me/")
+t.create_api_token("@TemporalMailBot", "Temp Email", "https://t.me/+xPvyu36YNV83YWVk")
 
 REDIS_URI = REDIS_URI.split(":")
 db = Redis(
@@ -92,7 +92,7 @@ async def check_user(user):
     try:
         await bot(
             functions.channels.GetParticipantRequest(
-                channel="BotzHub", participant=user
+                channel="Modzilla", participant=user
             )
         )
         ok = True
@@ -107,12 +107,12 @@ async def start_msg(event):
     user = await event.get_sender()
     msg = f"Hi {user.first_name}, welcome to the bot!\n\nI'm a MailBox Bot - I can generate a random e-mail address for you and send you the e-mails that come to that e-mail address!\n\nHit /generate to set-up your inbox!"
     btns = [
-        Button.inline("Disclaimer", data="disclaimer"),
-        Button.url("Updates", url="https://t.me/BotzHub"),
+        Button.inline("DISCLAIMER ⚠", data="disclaimer"),
+        Button.url("UPDATES 🚩", url="https://t.me/FlixBots"),
     ]
     if not await check_user(user.id):
-        msg += "\n\nI'm limited to the users in @BotzHub. Kinly join @BotzHub and then /start the bot!"
-        btns = Button.url("Join Channel", url="https://t.me/BotzHub")
+        msg += "\n\nI'm limited to the users in @Modzilla. Kinly join @Modzilla and then /start the bot!"
+        btns = Button.url("JOIN CHANNEL ⚠", url="https://t.me/Modzilla")
     await event.reply(msg, buttons=btns)
     if not await is_added("MAILBOT", user.id):
         await add_to_db("MAILBOT", user.id)
@@ -123,12 +123,12 @@ async def back(event):
     user = await event.get_sender()
     msg = f"Hi {user.first_name}, welcome to the bot!\n\nI'm a MailBox Bot - I can generate a random e-mail address for you and send you the e-mails that come to that e-mail address!\n\nHit /generate to set-up your inbox!"
     btns = [
-        Button.inline("Disclaimer", data="disclaimer"),
-        Button.url("Updates", url="https://t.me/BotzHub"),
+        Button.inline("DISCLAIMER ⚠", data="disclaimer"),
+        Button.url("UPDATES 🚩", url="https://t.me/Modzilla"),
     ]
     if not await check_user(user.id):
-        msg += "\n\nI'm limited to the users in @BotzHub. Kinly join @BotzHub and then /start the bot!"
-        btns = Button.url("Join Channel", url="https://t.me/BotzHub")
+        msg += "\n\nI'm limited to the users in @Modzilla. Kinly join @Modzilla and then /start the bot!"
+        btns = Button.url("JOIN CHANNEL", url="https://t.me/Modzilla")
     await event.edit(msg, buttons=btns)
 
 
@@ -143,7 +143,7 @@ async def domain_list(event):
 @bot.on(events.NewMessage(pattern="^/generate"))
 async def gen_id(event):
     if not await check_user(event.sender_id):
-        await event.reply("Kindly join @BotzHub to be able to use this bot!")
+        await event.reply("Kindly join @Modzilla to be able to use this bot!")
         return
     e = await event.reply("Please wait...")
     resp = get("https://www.1secmail.com/api/v1/?action=getDomainList")
@@ -154,7 +154,7 @@ async def gen_id(event):
         domains = eval(resp.text)
     except Exception as ex:
         await e.edit(
-            "Unknown error while fetching domain list, report to @BotzHubChat."
+            "Unknown error while fetching domain list, report to @FlixBots."
         )
         log.exception("Error while parsing domains: %s", ex)
         return
@@ -171,7 +171,7 @@ async def get_random_domain(event, num=None):
         domains = eval(resp.text)
     except Exception as ex:
         await e.edit(
-            "Unknown error while fetching domain list, report to @BotzHubChat."
+            "Unknown error while fetching domain list, report to @FlixBots."
         )
         log.exception("Error while fetching domains: %s", ex)
         return
@@ -189,9 +189,9 @@ async def on_selection(event):
     await event.edit(
         f"Generated email address: `{domain}`",
         buttons=[
-            [Button.inline("Proceed", data=f"mbx_{domain}")],
-            [Button.inline("Generate random email", data="gen_random")],
-            [Button.inline("Generate custom email", data=f"gen_custom_{domain_name}")],
+            [Button.inline("PROCEED ✅", data=f"mbx_{domain}")],
+            [Button.inline("GENERATE RANDOM MAIL 🔁", data="gen_random")],
+            [Button.inline("GENERATE CUSTOM MAIL 💯", data=f"gen_custom_{domain_name}")],
         ],
     )
 
@@ -206,9 +206,9 @@ async def gen_xx(event):
             await ev.edit(
                 f"Generated email address: `{domain}`",
                 buttons=[
-                    [Button.inline("Proceed", data=f"mbx_{domain}")],
-                    [Button.inline("Generate random email", data="gen_random")],
-                    [Button.inline("Generate custom email", data="gen_custom")],
+                    [Button.inline("PROCEED ✅", data=f"mbx_{domain}")],
+                    [Button.inline("GENERATE RANDOM MAIL 🔁", data="gen_random")],
+                    [Button.inline("GENERATE CUSTOM MAIL 💯", data="gen_custom")],
                 ],
             )
         elif ch.startswith("custom"):
@@ -237,7 +237,7 @@ async def gen_xx(event):
                 await msg.reply(
                     f"Generated email address: `{domain}`",
                     buttons=[
-                        [Button.inline("Proceed", data=f"mbx_{domain}")],
+                        [Button.inline("PROCEED ✅", data=f"mbx_{domain}")],
                     ],
                 )
 
@@ -247,7 +247,7 @@ async def mailbox(event):
     email = event.pattern_match.group(1).decode("utf-8")
     await event.edit(
         f"Current email address: `{email}`\nReceived emails: 0",
-        buttons=Button.inline("Refresh MailBox", data=f"ref_{email}"),
+        buttons=Button.inline("REFRESH MAILBOX 🔁", data=f"ref_{email}"),
     )
 
 
@@ -256,7 +256,7 @@ async def get_mails(ev, email):
     api_uri = f"https://www.1secmail.com/api/v1/?action=getMessages&login={username}&domain={domain}"
     resp = get(api_uri)
     if resp.status_code != 200:
-        await ev.edit("Server down! Report to @BotzHubChat.")
+        await ev.edit("Server down! Report to @FlixBots.")
         return
     try:
         mails = eval(resp.text)
@@ -383,5 +383,5 @@ async def broad(e):
     await xx.edit("Broadcast completed.\nSuccess: {}\nFailed: {}".format(done, error))
 
 
-log.info("\nBot has started.\n(c) @xditya\n")
+log.info("\nBot has started.\n(c) @FristyFlakes\n")
 bot.run_until_disconnected()
