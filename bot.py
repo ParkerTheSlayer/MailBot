@@ -92,7 +92,7 @@ async def check_user(user):
     try:
         await bot(
             functions.channels.GetParticipantRequest(
-                channel="Modzilla", participant=user
+                channel="FlixBots", participant=user
             )
         )
         ok = True
@@ -112,8 +112,8 @@ async def start_msg(event):
         [Button.url("FREE NETFLIX ACCOUNTS 💯", url="https://t.me/+xPvyu36YNV83YWVk")],
     ]
     if not await check_user(user.id):
-        msg += "\n\nI'm limited to the users in @Modzilla. Kinly join @Modzilla and then /start the bot!"
-        btns = Button.url("JOIN CHANNEL ⚠", url="https://t.me/Modzilla")
+        msg += "\n\nI'm limited to the users in @FlixBits. Kinly join @FlixBots and then /start the bot!"
+        btns = Button.url("JOIN CHANNEL ⚠", url="https://t.me/FlixBots")
     await event.reply(msg, buttons=btns)
     if not await is_added("MAILBOT", user.id):
         await add_to_db("MAILBOT", user.id)
@@ -129,8 +129,8 @@ async def back(event):
         [Button.url("FREE NETFLIX ACCOUNTS 💯", url="https://t.me/+xPvyu36YNV83YWVk")],
     ]
     if not await check_user(user.id):
-        msg += "\n\nI'm limited to the users in @Modzilla. Kinly join @Modzilla and then /start the bot!"
-        btns = Button.url("JOIN CHANNEL ⚠", url="https://t.me/Modzilla")
+        msg += "\n\nI'm limited to the users in @FlixBots. Kinly join @FlixBots and then /start the bot!"
+        btns = Button.url("JOIN CHANNEL ⚠", url="https://t.me/FlixBits")
     await event.edit(msg, buttons=btns)
 
 
@@ -145,7 +145,7 @@ async def domain_list(event):
 @bot.on(events.NewMessage(pattern="^/generate"))
 async def gen_id(event):
     if not await check_user(event.sender_id):
-        await event.reply("Kindly join @Modzilla to be able to use this bot!")
+        await event.reply("Kindly join @FlixBots to be able to use this bot!")
         return
     e = await event.reply("Please wait...")
     resp = get("https://www.1secmail.com/api/v1/?action=getDomainList")
